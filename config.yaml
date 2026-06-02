@@ -1,0 +1,25 @@
+jmeter:
+  path: "/usr/local/bin/jmeter"
+  version: "5.6.3"
+  max_heap: "2g"
+  min_heap: "1g"
+  timeout_seconds: 1800
+
+correlation:
+  min_confidence_score: 0.60
+  auto_replace: true
+  backup_jmx: true
+  naming_convention: "c_${param_name}"
+
+reporting:
+  enabled: true
+  output_dir: "./reports"
+  format: "html"
+  theme: "dark"
+
+logging:
+  level: "INFO"
+  log_to_file: true
+  file_path: "./logs/autocorrelator.log"
+  max_bytes: 10485760
+  backup_count: 5
