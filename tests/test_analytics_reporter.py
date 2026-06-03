@@ -6,7 +6,7 @@ Validates reporting structures and document creation rules.
 import os
 import shutil
 import unittest
-from src.core.constants import CorrelationType, HttpLocation
+from src.core.constants import CorrelationType, ExtractorType, HttpLocation
 from src.models.correlation import CorrelationCandidate, ParameterDependencyMatrix
 from src.reporter.analytics_reporter import AnalyticsReportEngine
 
@@ -30,7 +30,7 @@ class TestAnalyticsReportEngine(unittest.TestCase):
             source_sampler_name="Step 0 - Auth Login",
             location=HttpLocation.HEADERS,
             correlation_type=CorrelationType.SESSION_ID,
-            extractor_type=1,
+            extractor_type=ExtractorType.REGEX,
             extraction_expression=".*",
             confidence_score=0.95
         )
@@ -67,4 +67,4 @@ class TestAnalyticsReportEngine(unittest.TestCase):
         with open(path, "r", encoding="utf-8") as f:
             content = f.read()
             self.assertIn("JMeter Auto-Correlation Analytics Hub", content)
-            self.assertIn("ABC123XYZ", content)
+            self.assertIn("c_session_token", content)

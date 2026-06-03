@@ -17,10 +17,10 @@ class JmeterConfig(BaseModel):
     timeout_seconds: int = Field(default=1800, ge=60)
 
 class CorrelationConfig(BaseModel):
-    min_confidence_score: float = Field(default=0.60, ge=0.0, le=1.0)
+    min_confidence: float = Field(default=0.60, ge=0.0, le=1.0)
     auto_replace: bool = Field(default=True)
     backup_jmx: bool = Field(default=True)
-    naming_convention: str = Field(default="c_${param_name}")
+    variable_naming_pattern: str = Field(default="c_${param_name}")
 
 class ReportingConfig(BaseModel):
     enabled: bool = Field(default=True)

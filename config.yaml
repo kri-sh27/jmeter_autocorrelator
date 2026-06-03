@@ -1,5 +1,5 @@
 jmeter:
-  path: "/usr/local/bin/jmeter"
+  path: "C:\\apache-jmeter-5.6.3\\bin\\jmeter.bat"
   version: "5.6.3"
   max_heap: "2g"
   min_heap: "1g"
@@ -9,7 +9,7 @@ correlation:
   min_confidence_score: 0.60
   auto_replace: true
   backup_jmx: true
-  naming_convention: "c_${param_name}"
+  variable_naming_pattern: "c_${param_name}"
 
 reporting:
   enabled: true

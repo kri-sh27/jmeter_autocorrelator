@@ -74,10 +74,10 @@ import os
 import sys
 import argparse
 import logging
-from src.config.config_engine import ConfigurationEngine
+from src.config.config_engine import JmeterConfig, ApplicationConfiguration
 from src.core.logging_infra import LoggingInfrastructure
 from src.orchestrator.correlation_orchestrator import AutoCorrelationOrchestrator
-from src.config.exceptions import JmeterAutoCorrelatorException
+from src.config.exceptions import AutoCorrelatorException
 
 def main() -> None:
     # 1. Initialize parsing interfaces for incoming CLI flags
@@ -96,7 +96,7 @@ def main() -> None:
     args = parser.parse_args()
 
     # 2. Initialize application logging infrastructure
-    LoggingInfrastructure.setup_logging(log_level="INFO")
+    LoggingInfrastructure.setup({"log_level":"INFO"})
     logger = logging.getLogger("JMeterAutoCorrelator")
     
     logger.info("Initializing JMeter Auto-Correlator Framework...")
@@ -106,9 +106,11 @@ def main() -> None:
         if not os.path.exists(args.config):
             logger.warning(f"Target configuration file '{args.config}' not found. Initializing defaults.")
         
-        config_engine = ConfigurationEngine(config_path=args.config)
-        app_config = config_engine.get_config()
+        # config_engine = JmeterConfig(config_path=args.config)
+        # app_config = config_engine.get_config()
+        app_config = ApplicationConfiguration.load_from_yaml(args.config)
 
+        
         # 4. Instantiate the orchestrator engine and run the pipeline
         orchestrator = AutoCorrelationOrchestrator(app_config)
         results = orchestrator.run_pipeline(source_jmx=args.jmx, output_jmx=args.output)
@@ -126,7 +128,7 @@ def main() -> None:
         print(f" Exported Script:      {results['output_script_path']}")
         print("="*50 + "\n")
 
-    except JmeterAutoCorrelatorException as err:
+    except AutoCorrelatorException as err:
         logger.error(f"Application Execution Error: {str(err)}")
         sys.exit(1)
     except Exception as exc:

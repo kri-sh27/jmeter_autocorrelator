@@ -3,6 +3,7 @@ Auto-Correlation Pipeline Orchestrator.
 Coordinates the end-to-end workflow from script execution to variable substitution.
 """
 
+from logging import config
 import os
 import logging
 from typing import Dict, Any, List
@@ -26,7 +27,7 @@ class AutoCorrelationOrchestrator:
         self.config = config
         self.detector = CorrelationDetectorEngine(min_confidence=config.correlation.min_confidence)
         self.generator = ExtractorGeneratorEngine(variable_naming_template=config.correlation.variable_naming_pattern)
-
+        # self.generator = ExtractorGeneratorEngine(variable_naming_template=config.correlation.variable_naming_pattern)
     # def run_pipeline(self, source_jmx: str, output_jmx: str) -> Dict[str, Any]:
     #     """
     #     Executes the auto-correlation pipeline stages sequentially.
@@ -131,7 +132,7 @@ class AutoCorrelationOrchestrator:
 
         # Stage 8: Generate Enterprise Analytics Dashboards and Reports
         from src.reporter.analytics_reporter import AnalyticsReportEngine
-        pipeline_stats = {
+        pipeline_stats = {  
             "status": "SUCCESS",
             "samplers_count": len(initial_samplers),
             "total_requests": run_summary.total_requests,

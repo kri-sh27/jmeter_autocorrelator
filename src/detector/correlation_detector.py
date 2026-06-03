@@ -5,7 +5,7 @@ Implements signature matching and heuristic evaluation to locate dynamic system 
 
 import re
 import logging
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 from src.core.constants import CorrelationType, ExtractorType, HttpLocation
 from src.models.tracking import SampleResultRecord
 from src.models.correlation import CorrelationCandidate

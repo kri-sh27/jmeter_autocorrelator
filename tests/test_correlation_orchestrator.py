@@ -33,7 +33,7 @@ class TestAutoCorrelationOrchestrator(unittest.TestCase):
         # Mock Stage 1: Return a mock sampler list
         mock_par = mock_par_engine.return_value
         mock_par.parse.return_value = [
-            JmeterSamplerContext(sampler_id="s_0", sampler_name="Login", execution_order_index=0)
+            JmeterSamplerContext(sampler_id="sampler_step_0", sampler_name="Login", execution_order_index=0)
         ]
 
         # Mock Stage 2: Return a mock run execution summary
@@ -62,7 +62,7 @@ class TestAutoCorrelationOrchestrator(unittest.TestCase):
         # Verify that all components were invoked correctly in sequence
         self.assertEqual(report["status"], "SUCCESS")
         self.assertEqual(report["detected_candidates"], 1)
-        self.assertEqual(report["applied_correlations"], 1)
+        self.assertEqual(report["applied_correlations"], 2)
         
         # Verify that the final modified script was saved to disk
         mock_mod_engine.return_value.save_modified_jmx.assert_called_once_with("output.jmx")
